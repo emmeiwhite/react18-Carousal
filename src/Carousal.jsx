@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react'
-import { list } from './data'
+import { longList } from './data'
 import { FaQuoteRight } from 'react-icons/fa'
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa'
 
 export default function Carousal() {
-  const [carousalData, setCarousalData] = useState(list)
+  const [carousalData, setCarousalData] = useState(longList)
   const [currentSlideIndex, setCurrentSlideIndex] = useState(0)
   console.log(carousalData)
 
@@ -25,10 +25,15 @@ export default function Carousal() {
   }
 
   useEffect(() => {
-    // setInterval(() => {
-    //   handleNext()
-    // }, 3000)
-  }, [])
+    const interval = setInterval(() => {
+      handleNext()
+    }, 2000)
+
+    //   cleanup function
+    return () => {
+      clearInterval(interval)
+    }
+  }, [currentSlideIndex])
 
   return (
     <section className="slider-container ">
@@ -38,7 +43,11 @@ export default function Carousal() {
           <article
             key={id}
             className="slide"
-            style={{ transform: `translateX(${(index - currentSlideIndex) * 100}%)` }}
+            style={{
+              transform: `translateX(${(index - currentSlideIndex) * 100}%)`,
+              opacity: currentSlideIndex === index ? 1 : 0,
+              visibility: currentSlideIndex === 'visible' ? 'hidden' : 0
+            }}
           >
             <img
               src={image}
