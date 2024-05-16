@@ -1,5 +1,7 @@
 import { useState } from 'react'
 import { list } from './data'
+import { FaQuoteRight } from 'react-icons/fa'
+import { FaChevronLeft, FaChevronRight } from 'react-icons/fa'
 
 export default function Carousal() {
   const [carousalData, setCarousalData] = useState(list)
@@ -25,6 +27,7 @@ export default function Carousal() {
       }
     })
   }
+
   return (
     <section className="slider-container ">
       {carousalData.map((person, index) => {
@@ -44,21 +47,23 @@ export default function Carousal() {
             <p className="title">{title}</p>
             <p className="text">{quote}</p>
 
-            <span className="icon"></span>
+            <FaQuoteRight className="icon" />
           </article>
         )
       })}
       <button
-        className="btn prev"
+        type="button"
+        className="prev"
         onClick={handlePrev}
       >
-        {'<'}
+        <FaChevronLeft />
       </button>
       <button
-        className="btn next"
+        type="button"
+        className="next"
         onClick={handleNext}
       >
-        {'>'}
+        <FaChevronRight />
       </button>
     </section>
   )
