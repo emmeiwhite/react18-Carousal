@@ -1,8 +1,9 @@
 import { useState } from 'react'
-import { shortList } from './data'
+import { list } from './data'
 
 export default function Carousal() {
-  const [carousalData, setCarousalData] = useState(shortList)
+  const [carousalData, setCarousalData] = useState(list)
+  const [currentSlideIndex, setCurrentSlideIndex] = useState(0)
   console.log(carousalData)
   return (
     <section className="slider-container ">
@@ -12,7 +13,7 @@ export default function Carousal() {
           <article
             key={id}
             className="slide"
-            style={{ transform: `translateX(${100 * index}%)` }}
+            style={{ transform: `translateX(${(index - currentSlideIndex) * 100}%)` }}
           >
             <img
               src={image}
