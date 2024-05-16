@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { list } from './data'
 import { FaQuoteRight } from 'react-icons/fa'
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa'
@@ -9,24 +9,26 @@ export default function Carousal() {
   console.log(carousalData)
 
   const handlePrev = () => {
-    setCurrentSlideIndex(prevIndex => {
-      if (prevIndex <= 0) {
-        return carousalData.length - 1
-      } else {
-        return currentSlideIndex - 1
-      }
+    setCurrentSlideIndex(personIndexPrev => {
+      /** This is a wonderful logic */
+      const result = (personIndexPrev - 1 + carousalData.length) % carousalData.length
+      return result
     })
   }
 
   const handleNext = () => {
-    setCurrentSlideIndex(prevIndex => {
-      if (prevIndex >= carousalData.length - 1) {
-        return 0
-      } else {
-        return currentSlideIndex + 1
-      }
+    setCurrentSlideIndex(personIndexPrev => {
+      /** This is a wonderful logic */
+      const result = (personIndexPrev + 1) % carousalData.length
+      return result
     })
   }
+
+  useEffect(() => {
+    // setInterval(() => {
+    //   handleNext()
+    // }, 3000)
+  }, [])
 
   return (
     <section className="slider-container ">
@@ -51,6 +53,7 @@ export default function Carousal() {
           </article>
         )
       })}
+
       <button
         type="button"
         className="prev"
@@ -58,6 +61,7 @@ export default function Carousal() {
       >
         <FaChevronLeft />
       </button>
+
       <button
         type="button"
         className="next"
