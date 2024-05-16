@@ -5,6 +5,26 @@ export default function Carousal() {
   const [carousalData, setCarousalData] = useState(list)
   const [currentSlideIndex, setCurrentSlideIndex] = useState(0)
   console.log(carousalData)
+
+  const handlePrev = () => {
+    setCurrentSlideIndex(prevIndex => {
+      if (prevIndex <= 0) {
+        return carousalData.length - 1
+      } else {
+        return currentSlideIndex - 1
+      }
+    })
+  }
+
+  const handleNext = () => {
+    setCurrentSlideIndex(prevIndex => {
+      if (prevIndex >= carousalData.length - 1) {
+        return 0
+      } else {
+        return currentSlideIndex + 1
+      }
+    })
+  }
   return (
     <section className="slider-container ">
       {carousalData.map((person, index) => {
@@ -28,8 +48,18 @@ export default function Carousal() {
           </article>
         )
       })}
-      <button className="btn prev">{'<'}</button>
-      <button className="btn next">{'>'}</button>
+      <button
+        className="btn prev"
+        onClick={handlePrev}
+      >
+        {'<'}
+      </button>
+      <button
+        className="btn next"
+        onClick={handleNext}
+      >
+        {'>'}
+      </button>
     </section>
   )
 }
